@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cálculo de Esfuerzos en Suelo - Deber Universitario</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 20px;
+        }
+
+        header {
+            text-align: center;
+            margin-bottom: 40px;
+        }
+
+        h1,
+        h2,
+        p {
+            margin: 10px 0;
+        }
+
+        label,
+        input,
+        button {
+            font-size: 16px;
+            margin: 5px 0;
+        }
+
+        button {
+            padding: 10px 15px;
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+            cursor: pointer;
+        }
+
+        button:hover {
+            background-color: #45a049;
+        }
+    </style>
+    <script>
+        function calcularI3() {
+            // Obtener los valores ingresados
+            var B = parseFloat(document.getElementById('B').value);
+            var L = parseFloat(document.getElementById('L').value);
+            var z = parseFloat(document.getElementById('z').value);
+
+            // Calcular m' y n'
+            var m = B / (2 * z);
+            var n = L / (2 * z);
+
+            // Calcular la primera parte de la fórmula
+            var parte1 = (2 * m * n * Math.sqrt(m ** 2 + n ** 2 + 1)) /
+                ((m ** 2 + n ** 2 + 1) * (m ** 2 + n ** 2 + 2));
+
+            // Calcular la segunda parte con arcotangente
+            var parte2 = Math.atan((2 * m * n * Math.sqrt(m ** 2 + n ** 2 + 1)) /
+                (n ** 2 - m ** 2 + 1));
+
+            // Calcular I3
+            var I3 = (1 / (4 * Math.PI)) * (parte1 + parte2);
+
+            // Mostrar el resultado
+            document.getElementById('resultado').innerHTML = "El valor de I3 es: " + I3.toFixed(4);
+        }
+    </script>
+</head>
+
+<body>
+    <header>
+        <h1>Pucesi</h1>
+        <h2>Mecánica de Suelos II</h2>
+        <p><strong>Autor:</strong> Pablo.Báez.</p>
+    </header>
+
+    <h2>Cálculo de Esfuerzos en el Suelo</h2>
+    <p>Método de Boussinesq.</p>
+
+    <label for="B">Ancho de la zapata (B): </label>
+    <input type="number" id="B" step="any" placeholder="Ingrese el valor de B"><br><br>
+
+    <label for="L">Largo de la zapata (L): </label>
+    <input type="number" id="L" step="any" placeholder="Ingrese el valor de L"><br><br>
+
+    <label for="z">Profundidad (z): </label>
+    <input type="number" id="z" step="any" placeholder="Ingrese la profundidad"><br><br>
+
+    <button onclick="calcularI3()">Calcular I3</button>
+
+    <p id="resultado"></p>
+</body>
+
+</html>
